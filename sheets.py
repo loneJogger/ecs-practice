@@ -10,7 +10,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 SPREADSHEET_ID = '1nNYzkrmmbUzBlauimIJTNj9DzGcqnQwAWvKNNe1bTMo'
 RANGE = "'Current Hold List'!M2:M"
 
-# gets email addresses of current Lit Hold users and print them to the console.
+# gets email addresses of current Lit Hold users.
 def getLitHoldEmails():
     creds = None
 
@@ -34,7 +34,10 @@ def getLitHoldEmails():
 
     if not values:
         print('no values found...')
+        return set(['no values!'])
     else:
-        print('Emails:')
+        res = set([])
         for cell in values:
-            print(cell)
+            if len(cell) > 0:
+                res.add(cell[0].lower())
+        return res

@@ -1,3 +1,5 @@
 import sheets
 
-sheets.getLitHoldEmails()
+emails = sheets.getLitHoldEmails()
+
+print(emails)
