@@ -1,5 +1,12 @@
 import sheets
 
+print()
+
 emails = sheets.getLitHoldEmails()
 
-print(emails)
+print('number of lit hold members: ' + str(len(emails)))
+
+
+
+
+print()

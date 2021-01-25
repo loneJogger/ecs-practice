@@ -1,35 +1,19 @@
 # import statements
 import os.path
-import pickle
 from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-
-# constants
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-SPREADSHEET_ID = '1nNYzkrmmbUzBlauimIJTNj9DzGcqnQwAWvKNNe1bTMo'
-RANGE = "'Current Hold List'!M2:M"
+from google.oauth2 import service_account
+import settings
 
 # gets email addresses of current Lit Hold users.
 def getLitHoldEmails():
-    creds = None
 
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
+    secret = os.path.join(os.getcwd(), 'googs.json')
+    creds = service_account.Credentials.from_service_account_file(secret, scopes=settings.SCOPES, subject=settings.SUBJECT)
 
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
 
     service = build('sheets', 'v4', credentials=creds)
     sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE).execute()
+    result = sheet.values().get(spreadsheetId=settings.SPREADSHEET_ID, range=settings.RANGE).execute()
     values = result.get('values', [])
 
     if not values:

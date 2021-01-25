@@ -2,8 +2,7 @@
 
 ## Process
 
-1. read from a google Sheet.
-  - need to remove oauth browser authorization strategy
+1. read from a google Sheet. **DONE**
 1. insert result into a MongoDB doc table
 1. get process running in ECS
 1. get process running on a cron-like schedule on ECS
