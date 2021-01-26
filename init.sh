@@ -5,3 +5,4 @@ pip3 install google-api-python-client
 pip3 install google-auth-httplib2
 pip3 install google-auth-oauthlib
 pip3 install google-auth
+pip3 install boto3
