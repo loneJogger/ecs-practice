@@ -3,12 +3,13 @@ import dynamo
 
 print()
 
-emails = sheets.getLitHoldEmails()
-print('number of lit hold members: ' + str(len(emails)))
+sheet = sheets.getLitHoldEmails()
+print('number of lit hold members: ' + str(len(sheet)))
 
 session = dynamo.initSession()
-data = dynamo.getLitHoldUsers(session)
-print('number of db entries:' + str(len(data)))
+table = dynamo.getLitHoldUsers(session)
 
+changes = dynamo.compareSheetToTable(sheet, table)
+dynamo.writeChanges(session, changes)
 
 print()
